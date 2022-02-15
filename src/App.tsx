@@ -1,7 +1,6 @@
-import React from 'react';
+import './App.css';
 import Carousel from 'react-elastic-carousel';
 import Card from './components/Card';
-import './App.css';
 import { useFetch } from './hooks/useFetch';
 
 const breakPoints = [
@@ -27,7 +26,7 @@ function App() {
       return "ON TRACK"
     } 
   }
-
+  
   const handleCreditUtilisationTrack = () => {
     // @ts-ignore: Object is possibly 'null'.
     for (let i = 0; i < customerData.accounts.length; i ++) {
@@ -59,22 +58,42 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Carousel
-      breakPoints={breakPoints}
-      isRTL={false}>
+    <>
+      <div className='App'>
+        <h1 className="title">Insights</h1>
+        <Carousel 
+        breakPoints={breakPoints}
+        isRTL={false}>
+        {loading ? <div>Getting your insight ready ...</div> : 
         <Card 
           header={"Public information"} 
           body={'Bankruptcies and individual voluntary arrangements can damage your score'} 
           impact={"HIGH IMPACT"}
           track={
-            "OFF TRACK"}
-          />
+            handlePublicInformationTrack()}
+          />}
 
-      </Carousel>
-      
-    </div>
+        {loading ? <div>Getting your insight ready ...</div> :
+        <Card 
+          header={"Credit utilisation"} 
+          body={'Using more than 50% of your available credit can damage your score'} 
+          impact={"MEDIUM IMPACT"}
+          track={handleCreditUtilisationTrack()} 
+          />}
+
+        {loading ? <div>Getting your insight ready ...</div> : 
+        <Card 
+          header={"Electoral roll"} 
+          body={'Being on the electoral roll can improve your score'} 
+          impact={"MEDIUM IMPACT"}
+          track={handleElectoralRollTrack()} 
+          />}
+
+        </Carousel>
+      </div>
+    </>
   );
 }
 
 export default App;
+
