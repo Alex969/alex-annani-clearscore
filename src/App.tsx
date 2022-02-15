@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
+import Carousel from 'react-elastic-carousel';
 import './App.css';
+
+const breakPoints = [
+  { width: 375, itemsToShow: 2.1 },
+  { width: 768, itemsToShow: 2.2 },
+  { width: 1024, itemsToShow: 3 },
+  { width: 1280, itemsToShow: 3 },  
+];
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Carousel>
+        
+      </Carousel>
+      
     </div>
   );
 }
