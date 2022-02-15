@@ -15,7 +15,19 @@ function App() {
 
   const { loading, customerData } = useFetch('https://api.jsonbin.io/b/6107fbe9f14b8b153e05e714');
 
-
+  const handlePublicInformationTrack = (): string | undefined => {
+    // @ts-ignore: Object is possibly 'null'.
+    if(customerData
+    .personal
+    .publicInfo
+    .courtAndInsolvencies
+    .length !== 0) {
+      return "OFF TRACK"
+    } else {
+      return "ON TRACK"
+    } 
+  }
+  
   return (
     <div className="App">
       <Carousel
