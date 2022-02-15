@@ -27,7 +27,22 @@ function App() {
       return "ON TRACK"
     } 
   }
-  
+
+  const handleCreditUtilisationTrack = () => {
+    // @ts-ignore: Object is possibly 'null'.
+    for (let i = 0; i < customerData.accounts.length; i ++) {
+          // @ts-ignore: Object is possibly 'null'.
+      if (customerData.accounts[i].accountCategory === "credit_cards") {
+            // @ts-ignore: Object is possibly 'null'.
+        if (customerData.accounts[i].overview.balance.amount >= (customerData.accounts[i].overview.limit.amount)/ 2) {
+          return "OFF TRACK"
+        } else {
+          return "ON TRACK"
+        } 
+      }
+    }
+  }
+
   return (
     <div className="App">
       <Carousel
