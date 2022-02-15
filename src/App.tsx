@@ -43,6 +43,21 @@ function App() {
     }
   }
 
+  const handleElectoralRollTrack = () => {
+    // @ts-ignore: Object is possibly 'null'.
+    for (let j = 0; j < customerData.personal.electoralRoll.length; j++) {
+      // @ts-ignore: Object is possibly 'null'.
+      if (customerData
+        .personal
+        .electoralRoll[j]
+        .current === true) {
+          return "ON TRACK"
+        } else {
+          return "OFF TRACK"
+        }
+    }
+  }
+
   return (
     <div className="App">
       <Carousel
