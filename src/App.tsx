@@ -1,5 +1,6 @@
 import React from 'react';
 import Carousel from 'react-elastic-carousel';
+import Card from './components/Card';
 import './App.css';
 
 const breakPoints = [
@@ -15,6 +16,13 @@ function App() {
       <Carousel
       breakPoints={breakPoints}
       isRTL={false}>
+        <Card 
+          header={"Public information"} 
+          body={'Bankruptcies and individual voluntary arrangements can damage your score'} 
+          impact={"HIGH IMPACT"}
+          track={
+            "OFF TRACK"}
+          />
 
       </Carousel>
       
