@@ -12,8 +12,10 @@ const breakPoints = [
 function App() {
   return (
     <div className="App">
-      <Carousel>
-        
+      <Carousel
+      breakPoints={breakPoints}
+      isRTL={false}>
+
       </Carousel>
       
     </div>
