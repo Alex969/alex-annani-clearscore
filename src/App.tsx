@@ -2,6 +2,7 @@ import React from 'react';
 import Carousel from 'react-elastic-carousel';
 import Card from './components/Card';
 import './App.css';
+import { useFetch } from './hooks/useFetch';
 
 const breakPoints = [
   { width: 375, itemsToShow: 2.1 },
@@ -11,6 +12,10 @@ const breakPoints = [
 ];
 
 function App() {
+
+  const { loading, customerData } = useFetch('https://api.jsonbin.io/b/6107fbe9f14b8b153e05e714');
+
+
   return (
     <div className="App">
       <Carousel
