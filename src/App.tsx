@@ -2,6 +2,7 @@ import './App.css';
 import Carousel from 'react-elastic-carousel';
 import Card from './components/Card';
 import { useFetch } from './hooks/useFetch';
+import { CustomerDataType } from './types';
 
 const breakPoints = [
   { width: 375, itemsToShow: 2.1 },
@@ -12,11 +13,10 @@ const breakPoints = [
 
 function App() {
 
-  const { loading, customerData } = useFetch('https://api.jsonbin.io/b/6107fbe9f14b8b153e05e714');
+  const { customerData } = useFetch('https://api.jsonbin.io/b/6107fbe9f14b8b153e05e714');
 
-  const handlePublicInformationTrack = (): string | undefined => {
-    // @ts-ignore: Object is possibly 'null'.
-    if(customerData
+  const handlePublicInformationTrack = (cData: CustomerDataType) => {
+    if(cData
     .personal
     .publicInfo
     .courtAndInsolvencies
@@ -27,13 +27,10 @@ function App() {
     } 
   }
   
-  const handleCreditUtilisationTrack = () => {
-    // @ts-ignore: Object is possibly 'null'.
-    for (let i = 0; i < customerData.accounts.length; i ++) {
-          // @ts-ignore: Object is possibly 'null'.
-      if (customerData.accounts[i].accountCategory === "credit_cards") {
-            // @ts-ignore: Object is possibly 'null'.
-        if (customerData.accounts[i].overview.balance.amount >= (customerData.accounts[i].overview.limit.amount)/ 2) {
+  const handleCreditUtilisationTrack = (cData: CustomerDataType) => {
+    for (let i = 0; i < cData.accounts.length; i ++) {
+      if (cData.accounts[i].accountCategory === "credit_cards") {
+        if (cData.accounts[i].overview.balance.amount >= (cData.accounts[i].overview.limit.amount)/ 2) {
           return "OFF TRACK"
         } else {
           return "ON TRACK"
@@ -42,11 +39,9 @@ function App() {
     }
   }
 
-  const handleElectoralRollTrack = () => {
-    // @ts-ignore: Object is possibly 'null'.
-    for (let j = 0; j < customerData.personal.electoralRoll.length; j++) {
-      // @ts-ignore: Object is possibly 'null'.
-      if (customerData
+  const handleElectoralRollTrack = (cData: CustomerDataType) => {
+    for (let j = 0; j < cData.personal.electoralRoll.length; j++) {
+      if (cData
         .personal
         .electoralRoll[j]
         .current === true) {
@@ -64,36 +59,38 @@ function App() {
         <Carousel 
         breakPoints={breakPoints}
         isRTL={false}>
-        {loading ? <div>Getting your insight ready ...</div> : 
+        {customerData === null ? <div>Getting your insight ready ...</div> : 
         <Card 
           header={"Public information"} 
           body={'Bankruptcies and individual voluntary arrangements can damage your score'} 
           impact={"HIGH IMPACT"}
           track={
-            handlePublicInformationTrack()}
+            handlePublicInformationTrack(customerData)}
           />}
 
-        {loading ? <div>Getting your insight ready ...</div> :
+        {customerData === null ? <div>Getting your insight ready ...</div> :
         <Card 
           header={"Credit utilisation"} 
           body={'Using more than 50% of your available credit can damage your score'} 
           impact={"MEDIUM IMPACT"}
-          track={handleCreditUtilisationTrack()} 
+          track={handleCreditUtilisationTrack(customerData)} 
           />}
 
-        {loading ? <div>Getting your insight ready ...</div> : 
+        {customerData === null ? <div>Getting your insight ready ...</div> : 
         <Card 
           header={"Electoral roll"} 
           body={'Being on the electoral roll can improve your score'} 
           impact={"MEDIUM IMPACT"}
-          track={handleElectoralRollTrack()} 
+          track={handleElectoralRollTrack(customerData)} 
           />}
-
+        {console.log(customerData)}
         </Carousel>
       </div>
     </>
   );
 }
+
+
 
 export default App;
 
